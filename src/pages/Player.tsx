@@ -2,15 +2,12 @@ import { MessageCircle} from "lucide-react";
 import {Header} from "../components/Header.tsx";
 import {Video} from "../components/Video.tsx";
 import {Module} from "../components/Module.tsx";
-import {useAppSelector} from "../store";
-import {start, useCurrentLesson} from "../store/slices/player.ts";
+import {useAppDispatch, useAppSelector} from "../store";
+import {loadCourse, useCurrentLesson} from "../store/slices/player.ts";
 import {useEffect} from "react";
-import {api} from "../lib/axios.ts";
-import {useDispatch} from "react-redux";
 
 export function Player() {
-  const dispatch = useDispatch()
-
+  const dispatch = useAppDispatch()
   // exemplo de nome
   // const modules = useAppSelector(store => store.playerReducer.course.modules)
 
@@ -32,10 +29,8 @@ export function Player() {
   const { currentLesson } = useCurrentLesson()
 
   useEffect(() => {
-    api.get('/courses/1').then(response => {
-      dispatch(start(response.data))
-    })
-  }, [])
+    dispatch(loadCourse())
+  }, []);
 
   useEffect(() => {
     if (currentLesson) {
