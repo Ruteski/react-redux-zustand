@@ -1,5 +1,10 @@
 import {describe, expect, it} from 'vitest'
-import {next, play, player as playerReducer, playerSlice} from './player.ts'
+import {
+  next,
+  play,
+  player as playerReducer,
+  // playerSlice
+} from './player.ts'
 
 // test('reducers', () => {
 //   let state;
