@@ -34,3 +34,4 @@ If you are developing a production application, we recommend updating the config
 - instalar o react-redux
   - importar o provider do react-redux no app.tsx
 - no todolist importar o useSelector do react-redux
+- criar os reducers(actions) no index da store e importar o dispatch e useSelector no todolist
