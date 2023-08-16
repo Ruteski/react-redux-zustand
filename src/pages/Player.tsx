@@ -3,6 +3,8 @@ import {Header} from "../components/Header.tsx";
 import {Video} from "../components/Video.tsx";
 import {Module} from "../components/Module.tsx";
 import {useAppSelector} from "../store";
+import {useCurrentLesson} from "../store/slices/player.ts";
+import {useEffect} from "react";
 
 export function Player() {
   // exemplo de nome
@@ -22,6 +24,12 @@ export function Player() {
   //   return {modules, x}
   // })
   //**= fim formas de retorno
+
+  const { currentLesson } = useCurrentLesson()
+
+  useEffect(() => {
+    document.title = `Assistindo: ${currentLesson.title}`
+  }, [currentLesson])
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
