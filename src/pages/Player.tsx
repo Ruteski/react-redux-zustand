@@ -2,8 +2,27 @@ import { MessageCircle} from "lucide-react";
 import {Header} from "../components/Header.tsx";
 import {Video} from "../components/Video.tsx";
 import {Module} from "../components/Module.tsx";
+import {useAppSelector} from "../store";
 
 export function Player() {
+  // exemplo de nome
+  // const modules = useAppSelector(store => store.playerReducer.course.modules)
+
+  //**= outras formas de fazer o retorno dos modulos - sempre retorna apenas as informacoes que eu quero, apenas 1 slice, pra evitar renderizações desnecessarias
+   const modules = useAppSelector(state => state.playerReducer.course.modules)
+
+  // const modules = useAppSelector(state => {
+  //   return state.playerReducer.course.modules
+  // })
+
+  // const { modules, x} = useAppSelector(state => {
+  //   const modules = state.playerReducer.course.modules
+  //   const x = 1
+  //
+  //   return {modules, x}
+  // })
+  //**= fim formas de retorno
+
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -24,9 +43,16 @@ export function Player() {
           </div>
 
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            <Module title="Desvendando o Redux" amountOfLessons={3} moduleIndex={0}/>
-            <Module title="Desvendando o Redux" amountOfLessons={3} moduleIndex={1}/>
-            <Module title="Desvendando o Redux" amountOfLessons={3} moduleIndex={2}/>
+            { modules.map((module, index) =>  {
+              return (
+                <Module
+                  key={module.id}
+                  title={module.title}
+                  amountOfLessons={module.lessons.length}
+                  moduleIndex={index}
+                />
+              )
+            })}
           </aside>
         </main>
       </div>
