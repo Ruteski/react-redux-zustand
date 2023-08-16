@@ -1,10 +1,14 @@
 import {useCurrentLesson} from "../store/slices/player.ts";
+import {useAppSelector} from "../store";
 
 export function Header() {
   const {currentModule, currentLesson} = useCurrentLesson()
+  const isCourseLoading = useAppSelector(state => {
+    return state.playerReducer.isLoading
+  })
 
-  if (!currentLesson || !currentModule) {
-    return null
+  if (isCourseLoading) {
+    return <h1 className="text-2xl font-bold">Carregando ...</h1>
   }
 
   return (
