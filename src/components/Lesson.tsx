@@ -1,6 +1,4 @@
 import {PlayCircle, Video} from "lucide-react";
-// import {useDispatch} from "react-redux";
-// import {play} from "../store/slices/player.ts";
 
 interface LessonProps {
   title: string,
@@ -10,13 +8,6 @@ interface LessonProps {
 }
 
 export function Lesson({duration, title, onPlay, isCurrent=false}: LessonProps) {
-  // ==*** removido para usar o onPlay no lugar
-  // const dispatch = useDispatch()
-  //
-  // const handlePlayLesson = () => {
-  //   dispatch(play());
-  // }
-
   return (
     <button
       onClick={onPlay}

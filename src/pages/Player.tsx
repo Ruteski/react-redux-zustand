@@ -2,34 +2,21 @@ import { MessageCircle} from "lucide-react";
 import {Header} from "../components/Header.tsx";
 import {Video} from "../components/Video.tsx";
 import {Module} from "../components/Module.tsx";
-import {useAppDispatch, useAppSelector} from "../store";
-import {loadCourse, useCurrentLesson} from "../store/slices/player.ts";
 import {useEffect} from "react";
+import {useCurrentLesson, useStore} from "../zustand-store";
 
 export function Player() {
-  const dispatch = useAppDispatch()
-  // exemplo de nome
-  // const modules = useAppSelector(store => store.playerReducer.course.modules)
-
-  //**= outras formas de fazer o retorno dos modulos - sempre retorna apenas as informacoes que eu quero, apenas 1 slice, pra evitar renderizações desnecessarias
-   const modules = useAppSelector(state => state.playerReducer.course?.modules)
-
-  // const modules = useAppSelector(state => {
-  //   return state.playerReducer.course.modules
-  // })
-
-  // const { modules, x} = useAppSelector(state => {
-  //   const modules = state.playerReducer.course.modules
-  //   const x = 1
-  //
-  //   return {modules, x}
-  // })
-  //**= fim formas de retorno
+  const {course, load} = useStore( store => {
+    return {
+      course: store.course,
+      load: store.load
+    }
+  })
 
   const { currentLesson } = useCurrentLesson()
 
   useEffect(() => {
-    dispatch(loadCourse())
+    load();
   }, []);
 
   useEffect(() => {
@@ -44,7 +31,6 @@ export function Player() {
         <div className="flex items-center justify-between">
           <Header />
 
-
           <button className="flex items-center gap-2 rounded bg-violet-500 px-3 py-2 text-sm font-medium text-white hover:bg-violet-600">
             <MessageCircle className="h-4 w-4" />
             Deixar feedback
@@ -58,7 +44,7 @@ export function Player() {
           </div>
 
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            { modules && modules.map((module, index) =>  {
+            { course?.modules && course?.modules.map((module, index) =>  {
               return (
                 <Module
                   key={module.id}
